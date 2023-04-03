@@ -62,7 +62,9 @@ class gstate():
                     piece = self.board[r][c][1] # Get the type of the piece at the current position
                     # Determine the valid moves for the current piece and add them to the "moves" list
                     if piece == "P":
+                        print("test")
                         self.getPawnMoves(r,c,moves)
+                        print (*moves)
                     elif piece == "R":
                         self.getRookMoves(r,c,moves)
                     elif piece == "B":
@@ -73,8 +75,22 @@ class gstate():
                         self.getKingMoves(r,c,moves)
         return moves 
     
-    def getPawnMoves(self,r,c,moves):
-        pass
+ # This method is used to get all the possible moves for a pawn
+# given its current position (r,c) on the board.
+
+    def getPawnMoves(self, r, c, moves):
+        # 'wtf' is a flag that indicates if it's a white or black pawn.
+        if self.wtf:
+            # If it's a white pawn, we check if the cell in front of it is empty.
+            # If it is, we can move one step forward.
+            if self.board[r-1][c] == "--":
+                moves.append(Move((r, c), (r-1, c), self.board))
+                # If the white pawn is at its starting position (row 6) and the
+                # cell two steps in front of it is also empty, it can move two
+                # steps forward.
+                if r == 6 and self.board[r-2][c] == "--":
+                    moves.append(Move((r,c), (r-2, c), self.board))
+    
     def getRookMoves(self,r,c,moves):
         pass      
     def getBishopMoves(self,r,c,moves):
